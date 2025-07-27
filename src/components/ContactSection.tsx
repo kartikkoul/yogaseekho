@@ -322,7 +322,7 @@ const ContactSection = () => {
                   </motion.div>
                   <h3 className="text-2xl font-bold mb-2">Thank You!</h3>
                   <p className="text-center text-gray-600 mb-6">
-                    Your message has been sent successfully. I'll get back to
+                    Your message has been sent successfully. We'll get back to
                     you as soon as possible.
                   </p>
                   <Button
