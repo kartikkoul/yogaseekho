@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import emailjs from '@emailjs/browser';
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 import {
   Card,
   CardContent,
@@ -40,8 +40,8 @@ type FormValues = z.infer<typeof formSchema>;
 const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
-  const captchaRef = useRef<ReCAPTCHA>(null);
+  // const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  // const captchaRef = useRef<ReCAPTCHA>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -58,15 +58,15 @@ const ContactSection = () => {
 
     try {
       // Check if CAPTCHA is completed
-      if (!captchaToken) {
-        toast({
-          title: "CAPTCHA Required",
-          description: "Please complete the CAPTCHA verification before submitting.",
-          variant: "destructive",
-        });
-        setIsSubmitting(false);
-        return;
-      }
+      // if (!captchaToken) {
+      //   toast({
+      //     title: "CAPTCHA Required",
+      //     description: "Please complete the CAPTCHA verification before submitting.",
+      //     variant: "destructive",
+      //   });
+      //   setIsSubmitting(false);
+      //   return;
+      // }
 
       // EmailJS configuration
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
@@ -85,7 +85,7 @@ const ContactSection = () => {
         from_email: data.email,
         phone: data.phone,
         message: data.message,
-        captcha_token: captchaToken, // Include CAPTCHA token for verification
+        // captcha_token: captchaToken, // Include CAPTCHA token for verification
       };
 
       // Send email using EmailJS
@@ -106,10 +106,10 @@ const ContactSection = () => {
 
       setIsSubmitted(true);
       form.reset(); // Reset the form after successful submission
-      setCaptchaToken(null); // Reset CAPTCHA
-      if (captchaRef.current) {
-        captchaRef.current.reset(); // Reset CAPTCHA widget
-      }
+      // setCaptchaToken(null); // Reset CAPTCHA
+      // if (captchaRef.current) {
+      //   captchaRef.current.reset(); // Reset CAPTCHA widget
+      // }
     } catch (error) {
       console.error("Error submitting form:", error);
       toast({
@@ -124,22 +124,22 @@ const ContactSection = () => {
   };
 
   // CAPTCHA handlers
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token);
-  };
+  // const handleCaptchaChange = (token: string | null) => {
+  //   setCaptchaToken(token);
+  // };
 
-  const handleCaptchaExpired = () => {
-    setCaptchaToken(null);
-  };
+  // const handleCaptchaExpired = () => {
+  //   setCaptchaToken(null);
+  // };
 
-  const handleCaptchaError = () => {
-    setCaptchaToken(null);
-    toast({
-      title: "CAPTCHA Error",
-      description: "There was an error with the CAPTCHA. Please try again.",
-      variant: "destructive",
-    });
-  };
+  // const handleCaptchaError = () => {
+  //   setCaptchaToken(null);
+  //   toast({
+  //     title: "CAPTCHA Error",
+  //     description: "There was an error with the CAPTCHA. Please try again.",
+  //     variant: "destructive",
+  //   });
+  // };
 
   type socialMedia = {
     id: string,
@@ -228,7 +228,7 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Email</p>
-                    <p className="font-medium">yogaseekho@gmail.com</p>
+                    <a href="mailto:yogaseekhoinfo@gmail.com" className="font-medium">yogaseekhoinfo@gmail.com</a>
                   </div>
                 </div>
 
@@ -329,10 +329,10 @@ const ContactSection = () => {
                     onClick={() => {
                       setIsSubmitted(false);
                       form.reset();
-                      setCaptchaToken(null);
-                      if (captchaRef.current) {
-                        captchaRef.current.reset();
-                      }
+                      // setCaptchaToken(null);
+                      // if (captchaRef.current) {
+                      //   captchaRef.current.reset();
+                      // }
                     }}
                     variant="outline"
                   >
@@ -429,7 +429,7 @@ const ContactSection = () => {
                       />
 
                       {/* Google reCAPTCHA */}
-                      <div className="flex justify-center py-4">
+                      {/* <div className="flex justify-center py-4">
                         <ReCAPTCHA
                           ref={captchaRef}
                           sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || ""}
@@ -438,12 +438,12 @@ const ContactSection = () => {
                           onError={handleCaptchaError}
                           theme="light"
                         />
-                      </div>
+                      </div> */}
 
                       <Button
                         type="submit"
                         className="w-full group"
-                        disabled={isSubmitting || !captchaToken}
+                        disabled={isSubmitting}
                       >
                         {isSubmitting ? (
                           <>
